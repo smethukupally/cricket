@@ -1,0 +1,53 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block content %}
+<div class="container-fluid padding">
+<div class="row padding">
+<div class="col-md-12">
+    <p>
+        Total Number of Players: <strong>{{player_count}}</strong><br>
+    </p>
+    <p>
+        <a href="{% url 'cric:player_new' %}"  class="btn btn-primary">
+                <i class="fas fa-plus" style="font-size: 1.2em; margin: 0rem; color: #FFFFFF; text-decoration: none;"></i> Add More</a>
+    </p>
+    <div class="table-responsive">
+        <table class="table table-sm table-hover">
+            <thead>
+                <tr>
+                    <th>Actions</th>
+                    <th>Full Name</th>
+                    <th>Team</th>
+                    <th>Squad Position</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for player in player_list %}
+                <tr>
+                    <td>
+                        <a class="fa-icons" href="{% url 'cric:player_detail' pk=player.pk %}">
+                            <i class="fa fa-eye"></i>
+                        </a>
+                        &nbsp
+                        <a class="fa-icons" href="{% url 'cric:player_edit' pk=player.pk %}">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        &nbsp
+                        <a class="fa-icons" href="{% url 'cric:player_delete' pk=player.pk %}" onclick="return confirm('Are you sure you want to Delete?')">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    </td>
+                    <td>
+                        {{ player.first_name}}&nbsp{{player.last_name}}
+                    </td>
+                    <td>{{ player.team }}</td>
+                    <td>{{ player.squad_position }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+      </table>
+    </div>
+</div>
+</div>
+</div>
+{% endblock%}

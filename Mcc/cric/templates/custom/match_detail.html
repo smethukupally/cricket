@@ -1,0 +1,68 @@
+{% extends 'base/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container-fluid padding">
+<div class="row justify-content-center text-center">
+    <div class="mcc-scorecard col-12 col-sm-12 col-md-10 col-lg-8">
+        <div class="row text-left mt-2">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                <h6>{{match.match_day}} | {{match.field}} | Started at {{match.match_start_time}}</h6>
+                <hr>
+            </div>
+        </div>
+        <div class="row mx-1">
+            <div class="col-4 col-sm-4 col-md-4 col-lg-4">
+                <img src="{{ home_team.team_logo_url }}" class="img-fluid mx-auto mb-3" width="125">
+                <h3>{{home_team.team_name}}</h3>
+            </div>
+            <div class="col-4 col-sm-4 col-md-4 col-lg-4 my-auto">
+                <span class="mcc-livescore">
+                         <strong>({{match.home_team_score}} - {{match.guest_team_score}})</strong>
+                    </td>
+                </span>
+
+                <p class="mcc-livescore-sub">
+                {% if match.match_status == 'scheduled' %}
+                    Scheduled
+                {% elif match.match_status == 'in_progress'%}
+                    In Progress
+                {% elif match.match_status == 'finished'%}
+                    Full Time
+                {% elif match.match_status == 'cancelled'%}
+                    Cancelled
+                {% elif match.match_status == 'abandoned'%}
+                    Abandoned
+                {% else %}
+                    Status - Not Available
+                {% endif %}
+
+                </p>
+
+            </div>
+            <div class="col-4 col-sm-4 col-md-4 col-lg-4">
+                <img src="{{ guest_team.team_logo_url }}" class="img-fluid mx-auto mb-3" width="125">
+                <h3>{{guest_team.team_name}}</h3>
+            </div>
+        </div>
+        <div class="row mx-1">
+            <div class="mcc-livescore-sub col-6 col-sm-6 col-md-6 col-lg-6 text-right">
+                {% for score in home_score%}
+                    <p>
+                        {{score.player}}&nbsp;{{score.score_minute}}'
+                        <i class="far fa-futbol"></i>
+                    </p>
+                {% endfor%}
+            </div>
+            <div class="mcc-livescore-sub col-6 col-sm-6 col-md-6 col-lg-6 text-left">
+                {% for score in guest_goals%}
+                    <p>
+                        <i class="far fa-futbol"></i>&nbsp;
+                        {{score.score_minute}}'&nbsp;{{score.player}}
+                    </p>
+                {% endfor%}
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
